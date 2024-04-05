@@ -1,0 +1,30 @@
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class AuthModuleTest {
+    private AuthModule authModule;
+
+    @Before
+    public void setUp(){
+        authModule = new AuthModule();
+
+    }
+    @Test
+    public void testResisterUserSuccess(){
+        assertTrue(authModule.resisterUser("testUser", "testPassword"));
+    }
+    @Test(expected = IllegalAccessError.class)
+    public void testResisterUserDuplicateUsername(){
+        authModule.registerUser("existinguser", "testpassword");
+        authModule.registerUser("existinguser", "testpassword");
+
+    }
+    @Test(expected = IllegalArgumentException.class)
+    public  void testResisterUserEmptyUsername(){
+        authModule.registerUser("","testpassword");
+    }
+    @Test(expected = IllegalArgumentException.class)
+    public void testResisterUserEmptyPassword(){
+        authModule.registerUser("testuser", "");
+    }
